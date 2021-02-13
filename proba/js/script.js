@@ -11,11 +11,17 @@
 
 function autoOcultarBarraGMeet() {
   let timeout = null;
+  let divUsers = document.querySelector(".wnPUne.N0PJ8e");
+  let usersNumber = document.querySelector(".wnPUne.N0PJ8e").textContent;
   let body = document.getElementsByTagName("body");
   let divBarra = document.querySelector(".rG0ybd.LCXT6");
   let divPresentacion = document.querySelector(
     ".zWfAib.Z319Jd.QhPhw.n9oEIb.a1pVef"
   );
+
+  //Vuelve a bajar divPresentacion si cambia en numero de usuarios conectados
+  divUsers.onchange(divPresentacion.style.inset = "0px 0px 0px"); 
+  divUsers.onchange(console.log(usersNumber));
 
   divPresentacion.addEventListener("mousemove", function () {
     if (timeout !== null) {
