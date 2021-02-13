@@ -1,0 +1,27 @@
+{
+  "name": "Multiprobas",
+  "description": "Probas varias",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "main.js",
+      "js/jquery/jquery-3.5.1.min.js"
+    ]
+  },
+  "content_scripts": [ {
+    "matches": [ "https://meet.google.com/*" ],
+     "js": [ "js/script.js" ]
+  } ],
+  "permissions": [
+    "storage",
+    "tabs", 
+    "declarativeContent",
+    "activeTab",
+    "contextMenus"
+  ],
+  "browser_action": {
+    "default_title": "Make this page red"
+  },
+  "options_page": "views/options.html"
+}

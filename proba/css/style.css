@@ -1,0 +1,22 @@
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1em;
+  min-width: 300px;
+  background-color: #4e4d4d;
+  color: white;
+}
+
+h4 {
+  color: #b1b1b1;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5em;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
