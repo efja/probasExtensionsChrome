@@ -41,7 +41,23 @@ function autoOcultarBarraGMeet() {
  * @javierGonzález
  * Elimina a barra inferior de Google Meet.
  */
-function eliminarBarraGMeet() {
-    let divBarra = document.querySelector(".rG0ybd.LCXT6");
-    divBarra.remove();
+function ocultarBarraGMeet() {
+    let divBarra = document.querySelector(".rG0ybd.LCXT6").style;
+    if (divBarra.display != "none") {
+      divBarra.display = "none";
+    } else {
+      divBarra.display = "block";
+    }
+}
+
+function soPresentacion() {
+  let barra = document.getElementsByClassName("pHsCke");
+  barra[0].style.display = "none";
+
+  let contenedorPresentacion = document.getElementsByClassName("zWfAib Z319Jd n9oEIb QhPhw a1pVef");
+  contenedorPresentacion[0].style = "";
+
+  //let presentacion = document.getElementsByClassName("TPpRNe");
+  //presentacion[0].style.heigth = "100%";
+  //presentacion[0].style.with = "100%";
 }
