@@ -7,13 +7,13 @@
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: "autoOcultarBarraGMeet",
-        title: "Auto-ocultar barra Google Meet",
+        title: "Auto-ocultar barra inferior de Google Meet",
         type: "normal",
         onclick: autoOcultarBarraGMeet,
     });
     chrome.contextMenus.create({
-        id: "autoOcultar",
-        title: "Quitar barra Google Meet",
+        id: "ocultarBarraGMeet",
+        title: "Ocultar a barra superior e inferior Google Meet",
         type: "normal",
         onclick: eliminarBarraGMeet,
     });
@@ -31,46 +31,70 @@ chrome.runtime.onInstalled.addListener(function () {
  */
 
 let autoOcultarBarraGMeetString = `
-    let timeout = null;
-    let body = document.getElementsByTagName("body");
-    let divBarra = document.querySelector(".rG0ybd.LCXT6");
-    let divPresentacion = document.querySelector(
-      ".zWfAib.Z319Jd.QhPhw.n9oEIb.a1pVef"
-    );
-  
-    divPresentacion.addEventListener("mousemove", function () {
-      if (timeout !== null) {
-        divPresentacion.style.inset = "0px 0px 88px";
-        divBarra.style.transform = "translateY(0px)";
-        clearTimeout(timeout);
-      }
-  
-      timeout = setTimeout(function () {
-        divPresentacion.style.inset = "0px 0px 0px";
-        divBarra.style.transform = "translateY(88px)";
-      }, 3000);
-    });
+    function autoOcultarBarra() {
+        let timeout = null;
+        let body = document.getElementsByTagName("body");
+        let divBarra = document.querySelector(".rG0ybd.LCXT6");
+        let divPresentacion = document.querySelector(
+        ".zWfAib.Z319Jd.QhPhw.n9oEIb.a1pVef"
+        );
+
+        divPresentacion.addEventListener("mousemove", function () {
+        if (timeout !== null) {
+            divPresentacion.style.inset = "0px 0px 88px";
+            divBarra.style.transform = "translateY(0px)";
+            clearTimeout(timeout);
+        }
+
+        timeout = setTimeout(function () {
+            divPresentacion.style.inset = "0px 0px 0px";
+            divBarra.style.transform = "translateY(88px)";
+        }, 3000);
+        });
+    }
+    autoOcultarBarra();
 `;
 
 /**
  * @javierGonzález
- * Elimina a barra inferior de Google Meet.
+ * Oculta a barra inferior de Google Meet.
  */
-let eliminarBarraGMeetString = `
-    let divBarra = document.querySelector(".rG0ybd.LCXT6");
-    divBarra.remove();
+let ocultarBarrasGMeetString = `
+    function ocultarBarra() {
+        let barraSuperior =  document.querySelector("div[class='pHsCke']");
+        let barraInferior =  document.querySelector("div[jsname='EaZ7Cc']");
 
-    let barra = document.getElementsByClassName("pHsCke");
-    barra[0].style.display = "none";
-  
-    let contenedorPresentacion = document.getElementsByClassName("zWfAib Z319Jd n9oEIb QhPhw a1pVef");
-    contenedorPresentacion[0].style = "";
+        let contenedorPresentacion =  document.querySelector("div[jscontroller='MJfjyf']");
+        let contenedorPresentacion2 =  document.querySelector("div[data-ssrc='4169222102']");
+
+        let display = barraInferior.style.display;
+
+        // Ó redimensionar a pantalla recalculase automáticamete
+        contenedorPresentacion2.style.width = "100%";
+        contenedorPresentacion2.style.height = "100%";
+        contenedorPresentacion2.style.left = "0px";
+        contenedorPresentacion2.style.top = "0px";
+
+        // Mostra ou oculta as barras
+        if (display === "none") {
+            barraSuperior.style.display = "flex";
+            barraInferior.style.display = "flex";
+            divBarraInferior.style.display = "flex";
+            contenedorPresentacion.style.inset = "48px 0px 88px";
+        } else {
+            barraSuperior.style.display = "none";
+            barraInferior.style.display = "none";
+            divBarraInferior.style.display = "none";
+            contenedorPresentacion.style.inset = "0px 0px 0px";
+        }
+    }
+    ocultarBarra();
 `;
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(
         null, {
-            code: eliminarBarraGMeetString,
+            code: ocultarBarrasGMeetString,
         },
         (resultado) => {
             console.log(resultado);
@@ -92,7 +116,7 @@ function autoOcultarBarraGMeet() {
 function eliminarBarraGMeet() {
     chrome.tabs.executeScript(
         null, {
-            code: eliminarBarraGMeetString,
+            code: ocultarBarrasGMeetString,
         },
         (resultado) => {
             console.log(resultado);
